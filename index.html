@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVERY DAY IS A NIGHTMARE!</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #171525;
+  color: #f8f4ff;
+  font-family: Arial, "Noto Sans JP", sans-serif;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid #c6a8ff;
+  background: #392d56;
+  color: white;
+  padding: 12px 20px;
+  margin: 6px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #604b86;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 30px 20px;
+}
+
+.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#titleScreen {
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, #44345d 0%, #171525 70%);
+}
+
+h1 {
+  font-size: clamp(32px, 7vw, 65px);
+  line-height: 1.15;
+  color: #ffb8e8;
+  text-shadow: 3px 3px #8a4eaa;
+}
+
+.subtitle {
+  color: #fff3a6;
+  font-size: 19px;
+  margin-bottom: 35px;
+}
+
+#gameScreen {
+  justify-content: flex-start;
+  background: #252137;
+}
+
+.header {
+  width: min(850px, 100%);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid #75638d;
+  padding-bottom: 15px;
+}
+
+.classroom {
+  width: min(850px, 100%);
+  min-height: 280px;
+  margin-top: 25px;
+  padding: 30px;
+  border: 2px solid #8f79a8;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #504766, #29263e);
+  text-align: center;
+}
+
+.classroom h2 {
+  color: #fff0a6;
+}
+
+.notice {
+  width: min(850px, 100%);
+  margin-top: 20px;
+  padding: 18px;
+  background: #171525;
+  border-left: 4px solid #ffb8e8;
+  line-height: 1.8;
+  min-height: 75px;
+}
+
+.stats {
+  width: min(850px, 100%);
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.stat {
+  background: #39334d;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.actions {
+  width: min(850px, 100%);
+  margin-top: 20px;
+  text-align: center;
+}
+
+.small {
+  color: #c9bfdc;
+  font-size: 13px;
+}
+
+#endingScreen {
+  text-align: center;
+  background: #171525;
+}
+
+.pink {
+  color: #ffb8e8;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- TITLE SCREEN -->
+<section id="titleScreen" class="screen active">
+  <p class="subtitle">A VERY NORMAL SCHOOL SIMULATION ☆</p>
+
+  <h1>
+    EVERY DAY IS<br>
+    A NIGHTMARE!
+  </h1>
+
+  <p class="pink">HELL IS FOREVER! わー☆彡</p>
+
+  <button onclick="startGame()">START GAME</button>
+
+  <p class="small">A seven-day school experience.</p>
+</section>
+
+
+<!-- GAME SCREEN -->
+<section id="gameScreen" class="screen">
+
+  <div class="header">
+    <strong id="dayLabel">DAY 01 — WELCOME BACK!</strong>
+    <strong id="apLabel">ACTION POINTS: 3</strong>
+  </div>
+
+  <div class="classroom">
+    <p>LOCATION: CLASSROOM</p>
+    <h2>GOOD MORNING!</h2>
+    <p>
+      The classroom looks perfectly normal.<br>
+      Everyone seems busy with something.
+    </p>
+    <p class="pink">
+      Today's schedule: assignments, assignments, and more assignments!
+    </p>
+  </div>
+
+  <div class="notice" id="message">
+    おはようございます！今日も素晴らしい一日を過ごしましょう！☆彡
+    <br>
+    ところで、提出期限は本日23:59です♡
+  </div>
+
+  <div class="stats">
+    <div class="stat">ENERGY<br><strong id="energy">80</strong></div>
+    <div class="stat">SANITY<br><strong id="sanity">80</strong></div>
+    <div class="stat">ISOLATION<br><strong id="isolation">50</strong></div>
+    <div class="stat">TASK LOAD<br><strong id="tasks">40</strong></div>
+  </div>
+
+  <div class="actions" id="actionArea">
+    <h3>WHAT WILL YOU DO?</h3>
+    <button onclick="act('assignment')">DO ASSIGNMENT</button>
+    <button onclick="act('break')">TAKE A BREAK</button>
+    <button onclick="act('talk')">TALK TO SOMEONE</button>
+  </div>
+
+  <p class="small">Every action costs 1 Action Point.</p>
+
+  <button id="nextButton" onclick="finishDay()" style="display:none">
+    FINISH DAY
+  </button>
+
+</section>
+
+
+<!-- ENDING / UNLOCK SCREEN -->
+<section id="endingScreen" class="screen">
+  <h1 class="pink">DAY 02 UNLOCKED!</h1>
+
+  <p>
+    Congratulations!<br>
+    You survived one completely normal school day.
+  </p>
+
+  <p class="pink">ONLY SIX MORE DAYS TO GO! ☆彡</p>
+
+  <button onclick="location.reload()">BACK TO TITLE</button>
+</section>
+
+
+<script>
+
+// ゲームの基本データ
+let actionPoints = 3;
+
+let stats = {
+  energy: 80,
+  sanity: 80,
+  isolation: 50,
+  tasks: 40
+};
+
+
+// 画面を切り替える
+function showScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(screenId).classList.add("active");
+}
+
+
+// ゲーム開始
+function startGame() {
+  showScreen("gameScreen");
+}
+
+
+// 数値を0〜100の範囲にする
+function limit(value) {
+  return Math.max(0, Math.min(100, value));
+}
+
+
+// ステータスを画面に反映
+function updateStats() {
+  document.getElementById("energy").textContent = stats.energy;
+  document.getElementById("sanity").textContent = stats.sanity;
+  document.getElementById("isolation").textContent = stats.isolation;
+  document.getElementById("tasks").textContent = stats.tasks;
+  document.getElementById("apLabel").textContent =
+    "ACTION POINTS: " + actionPoints;
+}
+
+
+// 行動を選択
+function act(type) {
+
+  if (actionPoints <= 0) return;
+
+  actionPoints--;
+
+  const message = document.getElementById("message");
+
+  if (type === "assignment") {
+    stats.tasks -= 15;
+    stats.energy -= 10;
+
+    message.innerHTML =
+      "You completed one assignment!<br>" +
+      "Unfortunately, three more have appeared. ☆";
+  }
+
+  else if (type === "break") {
+    stats.energy += 15;
+    stats.sanity += 5;
+
+    message.innerHTML =
+      "You took a short break.<br>" +
+      "The school announcement continues playing.";
+  }
+
+  else if (type === "talk") {
+    stats.isolation -= 5;
+
+    message.innerHTML =
+      "You tried talking to a classmate.<br>" +
+      "They replied: 'Oh, sorry. I'm kind of busy right now!'";
+  }
+
+  // 数値を調整
+  Object.keys(stats).forEach(key => {
+    stats[key] = limit(stats[key]);
+  });
+
+  updateStats();
+
+  if (actionPoints === 0) {
+    document.getElementById("actionArea").style.display = "none";
+    document.getElementById("nextButton").style.display = "inline-block";
+
+    message.innerHTML +=
+      "<br><br>All actions completed. What a productive day!";
+  }
+}
+
+
+// DAY 01終了
+function finishDay() {
+  showScreen("endingScreen");
+}
+
+</script>
+
+</body>
+</html>
