@@ -5,194 +5,151 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EVERY DAY IS A NIGHTMARE!</title>
-
 <style>
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  min-height: 100vh;
   background: #171525;
   color: #f8f4ff;
   font-family: Arial, "Noto Sans JP", sans-serif;
 }
-
 button {
   cursor: pointer;
   border: 1px solid #c6a8ff;
   background: #392d56;
   color: white;
-  padding: 12px 20px;
-  margin: 6px;
+  padding: 11px 16px;
+  margin: 5px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 14px;
 }
-
-button:hover {
-  background: #604b86;
-}
-
+button:hover { background: #604b86; }
+button:disabled { opacity: .4; cursor: not-allowed; }
 .screen {
   display: none;
   min-height: 100vh;
-  padding: 30px 20px;
+  padding: 24px 16px;
 }
-
 .active {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
+.panel {
+  width: min(900px, 100%);
+  background: #29243d;
+  border: 1px solid #75638d;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 10px 0;
+}
 #titleScreen {
   text-align: center;
-  background:
-    radial-gradient(ellipse at center, #44345d 0%, #171525 70%);
+  background: radial-gradient(ellipse, #49345f, #171525 72%);
 }
-
 h1 {
-  font-size: clamp(32px, 7vw, 65px);
-  line-height: 1.15;
   color: #ffb8e8;
+  font-size: clamp(34px, 7vw, 64px);
   text-shadow: 3px 3px #8a4eaa;
+  line-height: 1.15;
 }
-
-.subtitle {
-  color: #fff3a6;
-  font-size: 19px;
-  margin-bottom: 35px;
-}
-
-#gameScreen {
-  justify-content: flex-start;
-  background: #252137;
-}
-
+.subtitle { color: #fff3a6; }
+.pink { color: #ffb8e8; }
+.gold { color: #fff0a6; }
 .header {
-  width: min(850px, 100%);
+  width: min(900px, 100%);
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+  padding: 10px 4px;
   border-bottom: 1px solid #75638d;
-  padding-bottom: 15px;
 }
-
-.classroom {
-  width: min(850px, 100%);
-  min-height: 280px;
-  margin-top: 25px;
-  padding: 30px;
+#gameScreen { justify-content: flex-start; }
+.scene {
+  width: min(900px, 100%);
+  min-height: 210px;
+  margin-top: 18px;
+  padding: 24px;
+  text-align: center;
   border: 2px solid #8f79a8;
   border-radius: 14px;
-  background: linear-gradient(135deg, #504766, #29263e);
-  text-align: center;
+  background: linear-gradient(135deg, #514666, #29243d);
 }
-
-.classroom h2 {
-  color: #fff0a6;
-}
-
-.notice {
-  width: min(850px, 100%);
-  margin-top: 20px;
+.scene h2 { color: #fff0a6; }
+.message {
+  width: min(900px, 100%);
+  min-height: 110px;
   padding: 18px;
+  margin: 12px 0;
+  line-height: 1.8;
   background: #171525;
   border-left: 4px solid #ffb8e8;
-  line-height: 1.8;
-  min-height: 75px;
+  border-radius: 5px;
 }
-
 .stats {
-  width: min(850px, 100%);
-  margin-top: 20px;
+  width: min(900px, 100%);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
-
 .stat {
-  background: #39334d;
   padding: 12px;
   border-radius: 8px;
+  background: #39334d;
 }
-
 .actions {
-  width: min(850px, 100%);
-  margin-top: 20px;
+  width: min(900px, 100%);
+  padding: 15px 0;
   text-align: center;
 }
-
-.small {
-  color: #c9bfdc;
+.actions h3 { color: #fff0a6; }
+.small { color: #c9bfdc; font-size: 12px; }
+#endingScreen { text-align: center; }
+.log {
+  width: min(900px, 100%);
+  color: #d8cde9;
   font-size: 13px;
+  line-height: 1.7;
+  margin-top: 10px;
 }
-
-#endingScreen {
-  text-align: center;
-  background: #171525;
-}
-
-.pink {
-  color: #ffb8e8;
-}
-
+hr { border: 0; border-top: 1px solid #75638d; }
 </style>
 </head>
 
 <body>
 
-<!-- TITLE SCREEN -->
 <section id="titleScreen" class="screen active">
   <p class="subtitle">A VERY NORMAL SCHOOL SIMULATION ☆</p>
-
-  <h1>
-    EVERY DAY IS<br>
-    A NIGHTMARE!
-  </h1>
-
+  <h1>EVERY DAY IS<br>A NIGHTMARE!</h1>
   <p class="pink">HELL IS FOREVER! わー☆彡</p>
-
+  <p>7 DAYS. 4 CLASSMATES. 1 PERFECT STUDENT.</p>
   <button onclick="startGame()">START GAME</button>
-
-  <p class="small">A seven-day school experience.</p>
+  <p class="small">A school story about reputation, pressure and choices.</p>
 </section>
 
-
-<!-- GAME SCREEN -->
 <section id="gameScreen" class="screen">
-
   <div class="header">
-    <strong id="dayLabel">DAY 01 — WELCOME BACK!</strong>
+    <strong id="dayLabel">DAY 01</strong>
     <strong id="apLabel">ACTION POINTS: 3</strong>
   </div>
 
-  <div class="classroom">
-    <p>LOCATION: CLASSROOM</p>
-    <h2>GOOD MORNING!</h2>
-    <p>
-      The classroom looks perfectly normal.<br>
-      Everyone seems busy with something.
-    </p>
-    <p class="pink">
-      Today's schedule: assignments, assignments, and more assignments!
-    </p>
+  <div class="scene">
+    <p id="locationLabel" class="small">LOCATION: CLASSROOM</p>
+    <h2 id="sceneTitle">WELCOME BACK!</h2>
+    <p id="sceneDescription"></p>
   </div>
 
-  <div class="notice" id="message">
-    おはようございます！今日も素晴らしい一日を過ごしましょう！☆彡
-    <br>
-    ところで、提出期限は本日23:59です♡
-  </div>
+  <div class="message" id="message"></div>
 
   <div class="stats">
     <div class="stat">ENERGY<br><strong id="energy">80</strong></div>
     <div class="stat">SANITY<br><strong id="sanity">80</strong></div>
     <div class="stat">ISOLATION<br><strong id="isolation">50</strong></div>
     <div class="stat">TASK LOAD<br><strong id="tasks">40</strong></div>
+    <div class="stat">EVIDENCE<br><strong id="evidence">0</strong></div>
+    <div class="stat">D TRUST<br><strong id="dTrust">0</strong></div>
   </div>
 
   <div class="actions" id="actionArea">
@@ -200,136 +157,328 @@ h1 {
     <button onclick="act('assignment')">DO ASSIGNMENT</button>
     <button onclick="act('break')">TAKE A BREAK</button>
     <button onclick="act('talk')">TALK TO SOMEONE</button>
+    <button onclick="act('investigate')">INVESTIGATE</button>
+    <button onclick="act('chat')">CHECK GROUP CHAT</button>
   </div>
-
-  <p class="small">Every action costs 1 Action Point.</p>
 
   <button id="nextButton" onclick="finishDay()" style="display:none">
     FINISH DAY
   </button>
 
+  <div class="log" id="log"></div>
 </section>
 
-
-<!-- ENDING / UNLOCK SCREEN -->
-<section id="endingScreen" class="screen">
-  <h1 class="pink">DAY 02 UNLOCKED!</h1>
-
-  <p>
-    Congratulations!<br>
-    You survived one completely normal school day.
-  </p>
-
-  <p class="pink">ONLY SIX MORE DAYS TO GO! ☆彡</p>
-
+<section id="endingScreen" class="screen active" style="display:none">
+  <p class="subtitle">DAY 07 — THE FINAL DAY</p>
+  <h1 id="endingTitle">THE END</h1>
+  <div class="panel">
+    <p id="endingText"></p>
+  </div>
+  <p class="pink">HELL IS FOREVER! わー☆彡</p>
   <button onclick="location.reload()">BACK TO TITLE</button>
 </section>
 
-
 <script>
+const dayData = [
+  {
+    title: "WELCOME BACK!",
+    location: "CLASSROOM",
+    description: "The classroom looks perfectly normal. Everyone is busy. Victoria is already surrounded by classmates.",
+    intro: "おはようございます！今日も素晴らしい一日を過ごしましょう！☆彡 課題提出期限は本日23:59です♡"
+  },
+  {
+    title: "GROUP WORK!",
+    location: "CLASSROOM",
+    description: "A group assignment has been announced. Groups are already forming. Nobody has invited you.",
+    intro: "TEACHER: Please form groups of four! I'm sure everyone will cooperate wonderfully!"
+  },
+  {
+    title: "EVERYONE LOVES HER",
+    location: "SCHOOL HALL",
+    description: "Victoria has received another award. The teacher is praising her in front of everyone.",
+    intro: "TEACHER: Victoria is such a wonderful example for this class! Let's give her a round of applause!"
+  },
+  {
+    title: "THE DATABASE",
+    location: "COMPUTER ROOM",
+    description: "You returned to collect something you forgot. A computer is still open. A folder reads CLASS MANAGEMENT DATABASE.",
+    intro: "The computer screen is unlocked. There are files about students, their relationships and their reputations."
+  },
+  {
+    title: "SHE IS SO NICE!",
+    location: "CLASSROOM",
+    description: "Victoria approaches you with a perfect smile. Something about her kindness feels carefully prepared.",
+    intro: "VICTORIA: Let's forget what happened. We're classmates, after all! ♡"
+  },
+  {
+    title: "NOBODY BELIEVES YOU",
+    location: "TEACHER'S OFFICE",
+    description: "You try to explain what you found. The teacher listens, but seems unconvinced.",
+    intro: "TEACHER: Victoria has always been responsible. Perhaps there has been a misunderstanding?"
+  },
+  {
+    title: "HELL IS FOREVER",
+    location: "CLASSROOM",
+    description: "It is the final day. The class is preparing its final presentation. Victoria stands at the front.",
+    intro: "ANNOUNCEMENT: Congratulations! It is the final day! Thank you for your wonderful effort! ☆彡"
+  }
+];
 
-// ゲームの基本データ
+let day = 0;
 let actionPoints = 3;
-
 let stats = {
   energy: 80,
   sanity: 80,
   isolation: 50,
   tasks: 40
 };
+let evidence = 0;
+let dTrust = 0;
+let victoriaAttention = 0;
+let talkedToday = false;
+let investigatedToday = false;
+let chatToday = false;
+let logEntries = [];
+let flags = {
+  databaseSeen: false,
+  copiedEvidence: false,
+  heardVictoriaSecret: false,
+  choseOwnWork: false
+};
 
-
-// 画面を切り替える
-function showScreen(screenId) {
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.remove("active");
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(s => {
+    s.classList.remove("active");
+    s.style.display = "none";
   });
-
-  document.getElementById(screenId).classList.add("active");
+  const target = document.getElementById(id);
+  target.style.display = "flex";
+  target.classList.add("active");
 }
 
-
-// ゲーム開始
 function startGame() {
+  day = 0;
+  actionPoints = 3;
+  evidence = 0;
+  dTrust = 0;
+  victoriaAttention = 0;
+  stats = {energy:80, sanity:80, isolation:50, tasks:40};
+  flags = {
+    databaseSeen:false,
+    copiedEvidence:false,
+    heardVictoriaSecret:false,
+    choseOwnWork:false
+  };
   showScreen("gameScreen");
+  renderDay();
 }
 
-
-// 数値を0〜100の範囲にする
-function limit(value) {
-  return Math.max(0, Math.min(100, value));
+function limit(n) {
+  return Math.max(0, Math.min(100, n));
 }
 
-
-// ステータスを画面に反映
 function updateStats() {
-  document.getElementById("energy").textContent = stats.energy;
-  document.getElementById("sanity").textContent = stats.sanity;
-  document.getElementById("isolation").textContent = stats.isolation;
-  document.getElementById("tasks").textContent = stats.tasks;
+  for (const key of Object.keys(stats)) {
+    document.getElementById(key).textContent = stats[key];
+  }
+  document.getElementById("evidence").textContent = evidence;
+  document.getElementById("dTrust").textContent = dTrust;
   document.getElementById("apLabel").textContent =
     "ACTION POINTS: " + actionPoints;
 }
 
+function addLog(text) {
+  logEntries.unshift(text);
+  document.getElementById("log").innerHTML =
+    "<hr>" + logEntries.slice(0,4).map(x => "• " + x).join("<br>");
+}
 
-// 行動を選択
-function act(type) {
+function renderDay() {
+  const data = dayData[day];
+  actionPoints = 3;
+  talkedToday = false;
+  investigatedToday = false;
+  chatToday = false;
+  logEntries = [];
 
-  if (actionPoints <= 0) return;
+  document.getElementById("dayLabel").textContent =
+    "DAY 0" + (day+1) + " — " + data.title;
+  document.getElementById("locationLabel").textContent =
+    "LOCATION: " + data.location;
+  document.getElementById("sceneTitle").textContent = data.title;
+  document.getElementById("sceneDescription").textContent = data.description;
+  document.getElementById("message").textContent = data.intro;
 
+  document.getElementById("actionArea").style.display = "block";
+  document.getElementById("nextButton").style.display = "none";
+
+  updateStats();
+}
+
+function spendAction() {
   actionPoints--;
+  updateStats();
+  if (actionPoints <= 0) {
+    document.getElementById("actionArea").style.display = "none";
+    document.getElementById("nextButton").style.display = "inline-block";
+    addLog("All action points used. The day is over.");
+  }
+}
+
+function act(type) {
+  if (actionPoints <= 0) return;
 
   const message = document.getElementById("message");
 
   if (type === "assignment") {
-    stats.tasks -= 15;
-    stats.energy -= 10;
-
-    message.innerHTML =
-      "You completed one assignment!<br>" +
-      "Unfortunately, three more have appeared. ☆";
+    stats.tasks -= 12;
+    stats.energy -= 8;
+    if (day === 6) flags.choseOwnWork = true;
+    message.textContent =
+      "You completed part of your work. The submission system immediately reminds you about another deadline. ☆";
+    addLog("You worked on your assignments.");
   }
 
   else if (type === "break") {
     stats.energy += 15;
-    stats.sanity += 5;
-
-    message.innerHTML =
-      "You took a short break.<br>" +
-      "The school announcement continues playing.";
+    stats.sanity += 8;
+    message.textContent =
+      "You took a quiet break. The cheerful school music continues in the hallway.";
+    addLog("You took a break.");
   }
 
   else if (type === "talk") {
-    stats.isolation -= 5;
+    if (talkedToday) {
+      message.textContent = "You have already spoken with someone today. Everyone seems busy.";
+      return;
+    }
+    talkedToday = true;
 
-    message.innerHTML =
-      "You tried talking to a classmate.<br>" +
-      "They replied: 'Oh, sorry. I'm kind of busy right now!'";
+    if (day === 0) {
+      stats.isolation -= 3;
+      message.textContent = "STUDENT A: Oh, sorry! I need to finish something for Victoria. Maybe later?";
+    } else if (day === 1) {
+      victoriaAttention++;
+      message.textContent = "VICTORIA: Oh, you still don't have a group? How unfortunate. I'll see what I can do. ♡";
+    } else if (day === 2) {
+      message.textContent = "STUDENT B: I just want a good grade. Please don't involve me in anything complicated.";
+    } else if (day === 3) {
+      dTrust++;
+      message.textContent = "STUDENT D: I saw you near that computer. I don't know what you found... but please be careful.";
+    } else if (day === 4) {
+      victoriaAttention++;
+      flags.heardVictoriaSecret = true;
+      message.textContent = "VICTORIA: Sometimes being perfect is exhausting. But I can't let anyone see me fail.";
+    } else if (day === 5) {
+      dTrust++;
+      message.textContent = "STUDENT D: I should have said something earlier. I'm sorry. I don't want to pretend I saw nothing.";
+    } else {
+      message.textContent = "STUDENT C: It's the last day. I hope things get better for everyone.";
+    }
+    addLog("You talked to someone.");
   }
 
-  // 数値を調整
-  Object.keys(stats).forEach(key => {
-    stats[key] = limit(stats[key]);
-  });
+  else if (type === "investigate") {
+    if (investigatedToday) {
+      message.textContent = "You have already investigated this location today.";
+      return;
+    }
+    investigatedToday = true;
 
-  updateStats();
+    if (day === 0) {
+      message.textContent = "You notice a folder on Victoria's desk. Its label reads: CLASS MANAGEMENT.";
+    } else if (day === 1) {
+      evidence++;
+      message.textContent = "You find a group assignment message. The group list was changed before you were invited.";
+    } else if (day === 2) {
+      message.textContent = "You notice that Victoria's award speech thanks almost everyone except the people who did the work.";
+    } else if (day === 3) {
+      flags.databaseSeen = true;
+      evidence += 2;
+      flags.copiedEvidence = true;
+      victoriaAttention += 2;
+      message.textContent = "DATABASE FOUND: YOUR PROFILE — SOCIAL STATUS: ISOLATED / COOPERATION: UNPREDICTABLE / RECOMMENDATION: MAINTAIN DISTANCE. You saved a record of the file.";
+    } else if (day === 4) {
+      evidence++;
+      message.textContent = "A note is hidden in a drawer: 'I must not fail. I cannot disappoint them.'";
+    } else if (day === 5) {
+      evidence++;
+      message.textContent = "You find a message showing that the group lists were quietly edited. There is now more evidence.";
+    } else {
+      message.textContent = "You review the evidence you collected. The final decision is yours.";
+    }
+    addLog("You investigated. Evidence: " + evidence);
+  }
 
-  if (actionPoints === 0) {
-    document.getElementById("actionArea").style.display = "none";
-    document.getElementById("nextButton").style.display = "inline-block";
+  else if (type === "chat") {
+    if (chatToday) {
+      message.textContent = "There are no new messages.";
+      return;
+    }
+    chatToday = true;
 
-    message.innerHTML +=
-      "<br><br>All actions completed. What a productive day!";
+    if (day === 0) {
+      message.textContent = "CLASS CHAT — STUDENT A: 'Victoria says we should finish the work early!' STUDENT C: 'Sounds good.'";
+    } else if (day === 1) {
+      message.textContent = "CLASS CHAT — STUDENT B: 'Who is doing the presentation?' STUDENT A: 'Victoria has already decided.'";
+    } else if (day === 2) {
+      message.textContent = "CLASS CHAT — VICTORIA: 'Thank you all for your cooperation! You're the best class! ♡'";
+    } else if (day === 3) {
+      message.textContent = "UNKNOWN FILE: CLASS MANAGEMENT DATABASE. Last edited by: VICTORIA.";
+      evidence++;
+    } else if (day === 4) {
+      message.textContent = "VICTORIA: 'Let's all move forward positively! No need to bring up old misunderstandings.'";
+    } else if (day === 5) {
+      message.textContent = "STUDENT D: 'I think we should listen to what happened before deciding.'";
+      dTrust++;
+    } else {
+      message.textContent = "TEACHER: 'Final presentation starts in five minutes! Good luck, everyone!'";
+    }
+    addLog("You checked the class chat.");
+  }
+
+  for (const key of Object.keys(stats)) stats[key] = limit(stats[key]);
+  spendAction();
+}
+
+function finishDay() {
+  if (day < 6) {
+    day++;
+    renderDay();
+  } else {
+    showEnding();
   }
 }
 
+function showEnding() {
+  let title = "";
+  let text = "";
 
-// DAY 01終了
-function finishDay() {
+  if (evidence >= 3 && victoriaAttention >= 2 && flags.databaseSeen) {
+    title = "THE ADMINISTRATOR";
+    text = "You uncover Victoria's private profile. SOCIAL APPROVAL REQUIRED. FAILURE TOLERANCE: 0%. PUBLIC IMAGE: PERFECT. PRIVATE STATUS: UNKNOWN. She has built a system to control everyone because she is terrified of losing the image she created. Understanding the reason does not erase the harm. The database is no longer a secret.";
+  }
+  else if (dTrust >= 2 && evidence >= 1) {
+    title = "THE EMPTY CLASSROOM";
+    text = "After the final bell, Student D stays behind. There is no dramatic victory, and the class does not change overnight. But someone finally chooses not to look away. You leave the classroom without performing for anyone.";
+  }
+  else if (evidence >= 2) {
+    title = "EXPOSED";
+    text = "You present the records. The truth is now visible, but the class does not immediately become kinder. Change will take more than one revelation.";
+  }
+  else if (flags.choseOwnWork && stats.energy > 15) {
+    title = "OUT OF THE SYSTEM";
+    text = "You submit your own work and stop trying to earn approval from everyone. You cannot control the class, but you can decide what deserves your effort.";
+  }
+  else {
+    title = "THE PERFECT STUDENT";
+    text = "You follow every instruction and receive an excellent grade. The announcement celebrates your success. On the screen, a new list of assignments appears. Congratulations! ☆";
+  }
+
+  document.getElementById("endingTitle").textContent = title;
+  document.getElementById("endingText").textContent = text;
   showScreen("endingScreen");
 }
-
 </script>
-
 </body>
 </html>
